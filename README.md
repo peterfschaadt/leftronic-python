@@ -38,7 +38,7 @@ We recommend checking out our [Tutorials](https://beta.leftronic.com/tutorials) 
 Python Package
 --------------
 
-Start by downloading the most recent version of our Python Package on [Github](https://github.com/sonofabell/leftronic-python) or on the [Python Package Index](https://http://pypi.python.org/pypi/leftronic).
+Start by downloading the most recent version of our Python Package on [Github](https://github.com/sonofabell/leftronic-python) or on the [Python Package Index](http://pypi.python.org/pypi/leftronic).
 
 ### Installing Dependencies
 
