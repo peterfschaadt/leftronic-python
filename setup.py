@@ -9,7 +9,7 @@ if version < '2.2.3':
 
 setup(
     name='leftronic',
-    version='1.0',
+    version='1.1',
     author='Peter Schaadt',
     author_email='support@leftronic.com',
     maintainer='Leftronic',
@@ -34,9 +34,9 @@ setup(
 
 This Python package provides functions to integrate with Leftronic's information dashboards.
     * pushNumber() pushes a number to a Number, Horizontal/Vertical Bar, or Dial widget
-    * pushLocation() pushes a geographic location (latitude and longitude) to a Map widget
+    * pushGeo() pushes a geographic location (latitude and longitude) to a Map widget
     * pushText() pushes a title and message to a Text Feed widget
-    * pushBoard() pushes an array to a Leaderboard widget
+    * pushLeaderboard() pushes an array to a Leaderboard widget
     * pushList() pushes an array to a List widget
 
 License is GNU Library or Lesser General Public License (LGPL).
