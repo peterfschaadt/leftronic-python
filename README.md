@@ -24,7 +24,7 @@ Authentication is handled by your API access key. We strongly encourage you to k
 All API requests are made by sending a POST request to https://beta.leftronic.com/customSend with a properly formatted JSON packet. We do not support XML.
 
 Current API version is 1.0.
-Current Python Package version is 1.0.
+Current Python Package version is 1.1.
 
 Getting Started
 ---------------
@@ -94,13 +94,13 @@ Pushing to Your Dashboard
 Import the file. Your location may vary.
 
 ```python
-import api_python
+from api_python import Leftronic
 ```
 
 Create a class instance with your API key. Feel free to name it whatever you'd like.
 
 ```python
-update = api_python.Leftronic("YOUR_ACCESS_KEY")
+update = Leftronic("YOUR_ACCESS_KEY")
 ```
 
 Here are some example functions to push to your dashboard. Be sure you have configured the correct widgets to accept custom data points. Also, be sure that you have entered your API access key correctly. *Note*: The first argument passed to the functions ("update" in these examples) is the name of your class instance.
@@ -108,19 +108,19 @@ Here are some example functions to push to your dashboard. Be sure you have conf
 Let's start with pushing a number to a widget.
 
 ```python
-api_python.Leftronic.pushNumber(update, "yourNumberStream", 14600)
+Leftronic.pushNumber(update, "yourNumberStream", 14600)
 ```
 
 Now we'll push some geographic coordinates to a map widget. You can use either the U.S. or world map widgets. The first coordinate (37.8) is the latitude and the second coordinate (-122.6) is the longitude. If your request is successful, you should see a data point appear on San Francisco, California.
 
 ```python
-api_python.Leftronic.pushLocation(update, "yourGeoStream", 37.8, -122.6)
+Leftronic.pushGeo(update, "yourGeoStream", 37.8, -122.6)
 ```
 
 Here's how you push a title and message to a text feed widget.
 
 ```python
-api_python.Leftronic.pushText(update, "yourTextStream", "This is my title.", "Hello World!")
+Leftronic.pushText(update, "yourTextStream", "This is my title.", "Hello World!")
 ```
 
 Let's push an array of names and values to a leaderboard widget. Be sure to create the array first (you may call it whatever you'd like). Be careful to use the proper syntax. Next, push the array to your widget.
@@ -128,7 +128,7 @@ Let's push an array of names and values to a leaderboard widget. Be sure to crea
 ```python
 leaderArray = [{"name": "Johnny", "value": 84}, {"name": "Jamie", "value": 75}, {"name": "Lance", "value": 62}]
 
-api_python.Leftronic.pushBoard(update, "yourBoardStream", leaderArray)
+Leftronic.pushLeaderboard(update, "yourBoardStream", leaderArray)
 ```
 
 Similar to the last example, let's push a list of items to a list widget. Same rules as last time.
@@ -136,7 +136,7 @@ Similar to the last example, let's push a list of items to a list widget. Same r
 ```python
 listArray = [{"listItem": "Elizabeth"}, {"listItem": "Marshall"}, {"listItem": "Claire"}, {"listItem": "Nolan"}]
 
-api_python.Leftronic.pushList(update, "yourListStream", listArray)
+Leftronic.pushList(update, "yourListStream", listArray)
 ```
 
 Feedback and Issues
