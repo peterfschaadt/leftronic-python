@@ -15,7 +15,7 @@ setup(
     maintainer='Leftronic',
     maintainer_email='support@leftronic.com',
     keywords=["api", "dashboard", "leftronic"],
-    py_modules=['api_python'],
+    py_modules=['leftronic'],
     classifiers = [
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
