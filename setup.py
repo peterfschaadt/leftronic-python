@@ -9,7 +9,7 @@ if version < '2.2.3':
 
 setup(
     name='leftronic',
-    version='1.1',
+    version='1.2',
     author='Peter Schaadt',
     author_email='support@leftronic.com',
     maintainer='Leftronic',
@@ -42,7 +42,7 @@ This Python package provides functions to integrate with Leftronic's information
 License is GNU Library or Lesser General Public License (LGPL).
 A copy of the license is available at http://www.gnu.org/copyleft/lesser.html.
 
-Public repository and documentation is on Github at https://github.com/sonofabell/leftonic-python.
+Public repository and documentation is on Github at https://github.com/sonofabell/leftronic-python.
 
 """
 )

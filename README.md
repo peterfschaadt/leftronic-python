@@ -94,7 +94,7 @@ Pushing to Your Dashboard
 Import the file. Your location may vary.
 
 ```python
-from api_python import Leftronic
+from leftronic import Leftronic
 ```
 
 Create a class instance with your API key. Feel free to name it whatever you'd like.
