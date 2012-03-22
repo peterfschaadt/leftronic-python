@@ -1,5 +1,17 @@
+#try:
+#    from eventlet.green import urllib2
+#except:
+#    print 'Could not import eventlet. Please install eventlet on your machine if you wish to use our asynchronous API.'
+#    import urllib2
 import urllib2
 import json
+
+try:
+    from Crypto.Cipher import AES
+    from Crypto import Random
+    import base64
+except:
+    print 'Could not import the PyCrypto library. Please `pip install pycrypto` if you wish to encrypt your outgoing data.'
 
 
 class Leftronic(object):
@@ -9,7 +21,11 @@ class Leftronic(object):
     def __init__(self, authKey):
         # Sets accessKey
         self.accessKey = authKey
-        self.apiUrl = 'https://www.leftronic.com/customSend/'
+        self.apiUrl = 'http://127.0.0.1:3000'
+        self.cryptoKey = None
+
+    def setEncryptionKey(self, cryptoKey):
+        self.cryptoKey = cryptoKey
 
     def pushMultiple(self, points):
         """
@@ -20,7 +36,7 @@ class Leftronic(object):
                             populateGeo("MyMap", 34, -118)])
         """
         if type(points) != list:
-            raise TypeError
+            raise TypeError('You must pass in a list')
         else:
             return self.postData({"streams": points})
 
@@ -46,11 +62,11 @@ class Leftronic(object):
                     last = int(i['timestamp'])
                 else:
                     # Timestamp values must increase
-                    raise ValueError
+                    raise ValueError('Timestamp values must increase')
         elif type(point) == dict:
             pass
         else:
-            raise TypeError
+            raise TypeError('You must pass in a numeric value, a list, or a dict')
         return {'streamName': streamName, 'point': point}
 
     def pushGeo(self, streamName, lati, longi, color=None):
@@ -78,7 +94,7 @@ class Leftronic(object):
 
         elif type(lati) == list and type(longi) == list:
             if len(lati) != len(longi):
-                raise ValueError
+                raise ValueError('Your lists of latitudes and longitudes must be the same size.')
             point = []
             for i in range(len(lati)):
                 obj = {'latitude': lati[i], 'longitude': longi[i]}
@@ -86,7 +102,7 @@ class Leftronic(object):
                     obj['color'] = color[i]
                 point.append(obj)
         else:
-            raise TypeError
+            raise TypeError('Your latitude, longitude, or color were not properly formatted.')
         return {'streamName': streamName, 'point': point}
 
     def pushText(self, streamName, myTitle, myMsg, imgUrl=None):
@@ -219,9 +235,52 @@ class Leftronic(object):
         # add the access key
         parameters['accessKey'] = self.accessKey
 
+        if self.cryptoKey:
+            self.encryptStreams(parameters)
+
         # Convert to JSON
         jsonData = json.dumps(parameters)
 
+        print jsonData
         # Make request
         response = urllib2.urlopen(self.apiUrl, jsonData)
         return response.read()
+
+    def encryptText(self, text):
+        # set up AES encryption
+        iv = Random.get_random_bytes(16)
+        key = self.cryptoKey
+        if len(key) % 16 != 0:                  # pad key with spaces if its length is not a multiple of 16
+                                                        # note that for extra security the user should not choose a short key
+            key += ' ' * (16 - len(key) % 16)
+        aes = AES.new(key, AES.MODE_CFB, iv, segment_size=128)
+
+
+        if len(text) % 16 != 0:                     # also pad text with spaces if length is not a multiple of 16
+            text += ' ' * (16 - len(text) % 16)
+
+        enc = aes.encrypt(text)
+
+        # concatenate encrypted text with random iv
+        return base64.b64encode(enc) + ':' + base64.b64encode(iv)
+
+    def encryptStreams(self, parameters):
+        if 'streams' in parameters:
+            # {'accessKey': ___, 'streams': [{'streamName': ___, 'point': ___}, ....]}
+            for stream in parameters['streams']:
+                # encrypt the 'point'
+                if type(stream['point']) == list:
+                    raise TypeError('If using encryption, your stream "points" must not be arrays, but single values.')
+
+                stream['epoint'] = self.encryptText(json.dumps(stream['point']))
+
+                del stream['point']
+
+        else:
+            if type(parameters['point']) == list:
+                raise TypeError('If using encryption, your stream "points" must not be arrays, but single values.')
+
+            parameters['epoint'] = self.encryptText(json.dumps(parameters['point']))
+            del parameters['point']
+
+
