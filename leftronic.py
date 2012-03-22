@@ -21,7 +21,7 @@ class Leftronic(object):
     def __init__(self, authKey):
         # Sets accessKey
         self.accessKey = authKey
-        self.apiUrl = 'https://www.leftronic.com'
+        self.apiUrl = 'https://www.leftronic.com/customSend'
         self.cryptoKey = None
 
     def setEncryptionKey(self, cryptoKey):
