@@ -9,7 +9,7 @@ if version < '2.2.3':
 
 setup(
     name='leftronic',
-    version='1.4.1',
+    version='1.4.2',
     author='Shaun Lee',
     author_email='support@leftronic.com',
     maintainer='Leftronic',
