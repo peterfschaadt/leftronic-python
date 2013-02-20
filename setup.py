@@ -27,8 +27,8 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
-    url = 'https://github.com/sonofabell/leftronic-python',
-    download_url = 'https://github.com/sonofabell/leftronic-python',
+    url = 'https://github.com/leftronic/leftronic-python',
+    download_url = 'https://github.com/leftronic/leftronic-python',
     description='A Python package to interface with the Leftronic API.',
     long_description = """\
 
@@ -42,7 +42,7 @@ This Python package provides functions to integrate with Leftronic's information
 License is GNU Library or Lesser General Public License (LGPL).
 A copy of the license is available at http://www.gnu.org/copyleft/lesser.html.
 
-Public repository and documentation is on Github at https://github.com/sonofabell/leftronic-python.
+Public repository and documentation is on Github at https://github.com/leftronic/leftronic-python.
 
 """
 )
